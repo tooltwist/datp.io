@@ -1,72 +1,168 @@
-# DATP
+# DATP package
 
-This is the main entrypoint of the DATP module, and contains functions to
+## Introduction
 
+This is the main entrypoint of the DATP package, and contains functions and classes related to running DATP in a RESTful server:
+
+- Prepare and run the server.
+- Start transactions.
+- Enquire on transaction status.
 - Register your custom step types
-- Start the DATP server (master or slave)
 - Convenience functions
 
-
-## addRoute
-
-- **Arguments:**
-
-  - `{StepInstance} instance` Details of the step instance being run
-  - `{Object} server` Restify server
-  - `{String} operation` get, put, post, del
-  - `{String} urlPrefix`
-  - `{String} path`
-  - `{Object[]} versionFunctionMapping`
-
-
-- **Usage:**
-
-The `addRoute` function allows you to add your own version-specific routes
-to the DATP server.
-
-- **Example:**
-
-The following will add a route for GET /myapp/:version/wallet/balance.
-
+## Starting the server
 ```js
-import DATP from './DATP'
+import DATP, { schedulerForThisNode } from './DATP'
+import { addRoute } from './DATP/extras'
 
-// Standard Restify compatible route
-function getWalletBalanceV1(req, res, next) {
-  res.send(...)
-  next()
+async function myRoute(req, res, next) {
+
+  // The tenant should be provided by your your credential-checking middleware.
+  // Transaction type is the pipeline name.
+  // When data and metadata are not defined they are taken from the request body.
+  const tenant = 'acme'
+  const transactionType = 'example'
+  return await DATP.startTransactionRoute(req, res, next, tenant, transactionType, data=null, metadata=null) {
 }
 
-// Start the DATP server
-const server = await DATP.restifyMasterServer()
+(async function main() {
 
-// Add my customer routes
-const prefix = 'myapp'
-DATP.addRoute(server, 'get', myApp, '/wallet/balance', [
-  { versions: '1.0 - 1.4', handler: getWalletBalanceV1 },
-  { versions: '2.0 - 2.9', handler: getWalletBalanceV2 },
-])
+  // Fire up the master DATP server.
+  const server = await DATP.restifyMasterServer()
+
+  // Add a route to the API
+  addRoute(server, 'get', API_PREFIX, '/my-route', [ { versions: '1.0 - 1.0', handler: myRoute } ])
+
+  // Enable the healthcheck route,
+  // start handling requests,
+  // and process DATP transactions.
+  await DATP.goLive(server)
+  console.log(`Node ${schedulerForThisNode.getNodeId()} is ready for use.`)
+
+})().catch(e => {
+  // Something went wrong
+  console.error(e)
+})
+```
+
+## Variables
+### schedulerForThisNode
+
+## Functions
+
+### prepareForUnitTesting
+
+DATP transactions can be run from a standalone application, without the RESTify framework or serving HTTP routes. Typically this is used for unit testing transactions.
+
+```js
+
+  import { schedulerForThisNode, prepareForUnitTesting, callbackRegister, pause } from './DATP'
+
+  ...
+  await prepareForUnitTesting()
+
+
+  let returnedContext = null
+  let returnedData = null
+
+  // Define a custom callback
+  const handlerName = `test-${NODE_GROUP}-callback-${Math.random()}`
+  await CallbackRegister.register(handlerName, (context, data) => {
+    returnedContext = context
+    returnedData = data
+  })
+
+  // Start a transaction
+  await schedulerForThisNode.startTransaction({
+    metadata: {
+      owner: OWNER,
+      nodeGroup: NODE_GROUP,
+      externalId: `extref-${Math.random()}`,
+      transactionType: 'someTransaction',
+      onComplete: {
+        callback: handlerName,
+        context: {
+          foo: 'bar'
+        }
+      }
+    },
+    data: {
+      instruction: 'abort'
+    }
+  })
+
+  // Give the transaction time to complete
+  await pause(500)
+
+  // The callback will hopefully have set returnedContext and returnedData by now...
+  if (returnedContext === null) {
+    // Not complete
+  } else {
+    // Check the reply
+  }
 
 ```
 
-- **See also:** [Application Config](./DZDstepInstance.html)
+### startTransactionRoute
+data=null, metadata=null)
+
+- **Arguments:**
+
+  - `{Object} req` The request object, passed to a Restify route.
+  - `{Object} req` The response object.
+  - `{Object} next` The standard 'next' function.
+  - `{string} tenant`
+  - `{string} transactionType` The name of the transaction / pipeline to run
+  - `{Object} data`
+  - `{Object} metadata`
+
+- **Usage:**  
+
+This is the most common way to start a transaction.
+An application route passes control to this function, and DATP looks after
+starting the transaction and responding to the user.
+
+Short polling, long polling and webhooks will be handled as required.
+
+If the data and metadata are not provided in this function call, it will
+look for them in the body of the request.
+
+### transactionStatusByTxIdRoute
+
+- **Arguments:**
+
+  - `{Object} req` The request object, passed to a Restify route.
+  - `{Object} req` The response object.
+  - `{Object} next` The standard 'next' function.
+
+- **Usage:**  
+
+An application route can use this function to pass control over to DATP,
+which will check for `transactionId` parameter
+and return the transaction status back to the user.
+
+### transactionStatusByExternalIdRoute
+
+- **Arguments:**
+
+  - `{Object} req` The request object, passed to a Restify route.
+  - `{Object} req` The response object.
+  - `{Object} next` The standard 'next' function.
+
+- **Usage:**
+An application route can use this function to pass control over to DATP,
+which will check for an`externalId` parameter
+and return the appropriate transaction status back to the user.
 
 
+### goLive
+export async function goLive
 
+- **Arguments:**
 
+  - `{Object} server` The Restify server object.
 
-
-
-
-## ConversionHandler
-## FormsAndFields
-## getTransactionResult
-## goLive
-## initiateTransaction
-## query: dbQuery
-
-
-## restifyMasterServer
+### restifyMasterServer
 
 - **Arguments:**
 
@@ -74,38 +170,7 @@ DATP.addRoute(server, 'get', myApp, '/wallet/balance', [
 
 - **Usage:**
 
-ZZZThe `invoke` function performs that actual functionality of the step. The
-instance parameter provides the context of the transaction and also
-convenience functions.
-
-- **Example:**
-
-```js
-  async invoke(instance) {
-
-    // Write something to the transaction logbook
-    const stepId = instance.getStepId()
-    instance.log(instance.DEBUG, `MyFavoriteStep invoked [${stepId}]`)
-
-    // Get the data input to the step
-    const data = instance.getDataAsObject()
-
-    // Do something, using the data and details from the definition
-    const greeting = this.#message
-    data.newMessage = `${greeting} ${data.firstName}`
-
-    // Add credit to an account
-    instance.log(instance.DEBUG, `Crediting ${this.#amount} to account ${data.accountNo}`)
-    await creditAccount(data.accountNo, this.#amount)
-
-    // Time to complete the step and send a result
-    const note = ''
-    instance.log(instance.DEBUG, `MyFavoriteStep complete [${stepId}]`)
-    return await instance.succeeded(note, data)
-  }
-```
-
-- **See also:** [Application Config](./DZDstepInstance.html)
+See the [Starting the Server](./DZDDATP.html#starting-the-server) example above.
 
 
 
@@ -113,63 +178,41 @@ convenience functions.
 
 
 
-## restifySlaveServer
-
-- **Arguments:**
-
-  - `{StepInstance} instance` Details of the step instance being run
-
-- **Usage:**
-
-The `invoke` function performs that actual functionality of the step. The
-instance parameter provides the context of the transaction and also
-convenience functions.
-
-- **Example:**
-
-```js
-  async invoke(instance) {
-
-    // Write something to the transaction logbook
-    const stepId = instance.getStepId()
-    instance.log(instance.DEBUG, `MyFavoriteStep invoked [${stepId}]`)
-
-    // Get the data input to the step
-    const data = instance.getDataAsObject()
-
-    // Do something, using the data and details from the definition
-    const greeting = this.#message
-    data.newMessage = `${greeting} ${data.firstName}`
-
-    // Add credit to an account
-    instance.log(instance.DEBUG, `Crediting ${this.#amount} to account ${data.accountNo}`)
-    await creditAccount(data.accountNo, this.#amount)
-
-    // Time to complete the step and send a result
-    const note = ''
-    instance.log(instance.DEBUG, `MyFavoriteStep complete [${stepId}]`)
-    return await instance.succeeded(note, data)
-  }
-```
-
-- **See also:** [Application Config](./DZDstepInstance.html)
+### restifySlaveServer
+Prepare the Restify server as with `restifyMasterServer`, but do not register the routes used by healthchecks and MONDAT.
 
 
 
 
 
+<!--
+## class ResultReceiver
+## class ResultReceiverRegister
+## class Step
+## StepTypesZ
+-->
+
+<!-- ## Convenience
+### ConversionHandler
+### FormsAndFields
+### RouterStep
+### dbQuery
+### schedulerForThisNode
 
 
-## ResultReceiver
-## ResultReceiverRegister
-## Step
-## StepTypes
 
+### FormsAndFields
+### getTransactionResult
+### goLive
+### initiateTransaction
 
+## Variables
+### query: dbQuery
 
-
-
-
-
-
-
+## Classes
+### Step
+### StepTypes
+### ConversionHandler
+See #ConversionHandler
+### FormsAndFields
+### RouterStep -->

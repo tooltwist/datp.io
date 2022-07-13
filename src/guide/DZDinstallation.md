@@ -1,8 +1,15 @@
 # Installation
 
-Vue.js is built by design to be incrementally adoptable. This means that it can be integrated into a project multiple ways depending on the requirements.
+While DATP can be installed and used many different ways, it is recommended to start by using the following instructions to set up
+a development environment on your desktop or laptop.
 
+This quick install uses Visual Studio Code and Docker to run up a
+development environment in minutes, without the need to
+install databases and other infrastructure on your development machine.
 
+If you wish to install the database, REDIS or other components on
+your machine later that can be done incrementally from this already
+working configuration.
 
 
 ## Instructions for Developers
@@ -63,7 +70,7 @@ Press “Reopen in Container” on the bottom right ... or Press the bottom left
 
 The first time it runs it takes quite a while, as it builds the Docker container and then installs npm packages. If you want to watch what it's doing, you can show the log file.
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-3.png" alt="Add Chrome Configuration" style="width: 550px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+<div style="padding: 10px 25px 30px"><img src="/datp-images/install-3.png" alt="Add Chrome Configuration" style="width: 550px; border-radius: 3px"></div>
 
 
 ### Step 5 - Load the database
@@ -71,7 +78,7 @@ Once you see _Configure Dev Container_ at the bottom, you can load the database.
 
 A) Use the option on the Terminal menu on the right.
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-4.png" alt="Add Chrome Configuration" style="width: 320px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+<div style="padding: 10px 25px 30px"><img src="/datp-images/install-4.png" alt="Add Chrome Configuration" style="width: 320px; border-radius: 3px"></div>
 
 B) Or, open a terminal inside vscode and run `./4.load-data`.
 
@@ -92,7 +99,7 @@ C) Run `./5.run-master` and `./6.run-mondat` in a terminal inside vscode.
 ### Ready to use
 Wait for these commands to complete. Mondat takes a while - it appears to be finished but is still loading until you see the second _Listening on: ..._ message.
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-5.png" alt="Add Chrome Configuration" style="width: 490px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+<div style="padding: 10px 25px 30px"><img src="/datp-images/install-5.png" alt="Add Chrome Configuration" style="width: 490px; border-radius: 3px"></div>
 
 
 Once this is complete, your application is running and ready for development work.
@@ -104,42 +111,26 @@ You will be able to use the application using the following URLs...
 
 [http://localhost:33370/datp/1.0/healthcheck]()
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-6.png" alt="Add Chrome Configuration" style="width: 390px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+<div style="padding: 10px 25px 30px"><img src="/datp-images/install-6.png" alt="Add Chrome Configuration" style="width: 390px; border-radius: 3px"></div>
 
 ### Mondat
 
 [http://localhost:33380/mondat]()
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-7.png" alt="Add Chrome Configuration" style="width: 690px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+![DATP Node](../../assets/mondat/mondat-home.png)
 
 ### PHPMyadmin
 
 [http://localhost:33360/]()
 
-<div style="padding: 10px 25px 30px"><img src="/datp-images/install-8.png" alt="Add Chrome Configuration" style="width: 690px; border-radius: 3px; box-shadow: 0 10px 15px rgb(0 0 0 / 50%)"></div>
+<div style="padding: 10px 25px 30px"><img src="/datp-images/install-8.png" alt="Add Chrome Configuration" style="width: 690px; border-radius: 3px"></div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 
 ## Release Notes
 
 Latest version: ![npm](https://img.shields.io/npm/v/vue/next.svg)
 ZZZZZZ
-Detailed release notes for each version are available on [GitHub](https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md).
+Detailed release notes for each version are available on [GitHub](https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md). -->

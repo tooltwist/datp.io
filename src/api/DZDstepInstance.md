@@ -1,4 +1,4 @@
-# StepInstance
+# class StepInstance
 
 Most of the step functions receive a **StepInstance** parameter, which provides the context of the step being run, and also gives access to various functions related
 to the step being run.

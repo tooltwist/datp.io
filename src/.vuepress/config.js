@@ -1,50 +1,49 @@
 const sidebar = {
-  cookbook: [
-    {
-      title: 'Cookbook',
-      collapsable: false,
-      children: [
-        '/cookbook/',
-        '/cookbook/editable-svg-icons',
-        '/cookbook/debugging-in-vscode',
-        '/cookbook/automatic-global-registration-of-base-components'
-      ]
-    }
-  ],
+  // cookbook: [
+  //   {
+  //     title: 'Cookbook',
+  //     collapsable: false,
+  //     children: [
+  //       '/cookbook/',
+  //       '/cookbook/editable-svg-icons',
+  //       '/cookbook/debugging-in-vscode',
+  //       '/cookbook/automatic-global-registration-of-base-components'
+  //     ]
+  //   }
+  // ],
   guide: [
     {
-      title: 'Essentials',
+      title: 'Guide',
       collapsable: false,
       children: [
         '/guide/DZDintroduction',
+        '/guide/ZUsecases',
+        // '/guide/ZGettingStarted',
         // '/guide/DZDproduction-deployment',
-        // '/guide/template-syntax',
-        // '/guide/data-methods',
-        // '/guide/computed',
-        // '/guide/class-and-style',
-        // '/guide/conditional',
-        // '/guide/list',
-        // '/guide/events',
-        // '/guide/forms',
-        // '/guide/component-basics'
+      ]
+    },
+    {
+      title: 'Architecture',
+      collapsable: false,
+      children: [
+        '/guide/ZArchitecture',
+        '/guide/ZQueues',
+        // '/guide/DZDproduction-deployment',
       ]
     },
     {
       title: 'Mondat',
       collapsable: false,
       children: [
-        // '/guide/DZDintroduction',
-        // '/guide/DZDinstallation',
         '/guide/DZDmondat',
-        // '/guide/template-syntax',
-        // '/guide/data-methods',
-        // '/guide/computed',
-        // '/guide/class-and-style',
-        // '/guide/conditional',
-        // '/guide/list',
-        // '/guide/events',
-        // '/guide/forms',
-        // '/guide/component-basics'
+        '/guide/DZDmondat-caches',
+        '/guide/DZDmondat-queues',
+        '/guide/DZDmondat-nodes',
+        '/guide/DZDmondat-transactions',
+        '/guide/DZDmondat-pipelines',
+        '/guide/DZDmondat-testing',
+        // '/guide/DZDmondat-generic-api',
+        // '/guide/DZDmondat-generic-mapping'
       ]
     },
     {
@@ -53,24 +52,7 @@ const sidebar = {
       children: [
         '/guide/DZDinstallation',
         '/guide/DZDdeveloper-guide',
-        // '/guide/template-syntax',
-        // '/guide/data-methods',
-        // '/guide/computed',
-        // '/guide/class-and-style',
-        // '/guide/conditional',
-        // '/guide/list',
-        // '/guide/events',
-        // '/guide/forms',
-        // '/guide/component-basics'
-      ]
-    },
-    {
-      title: 'Web Hooks',
-      collapsable: false,
-      children: [
-        '/guide/DZDwebhook-background',
-        '/guide/DZDwebhook-handlers',
-        '/guide/DZDwebhook-signatures',
+        // '/guide/DZDconfiguration',
       ]
     },
     // {
@@ -80,17 +62,37 @@ const sidebar = {
     //     '/guide/DZDproduction-deployment',
     //   ]
     // },
+    // {
+    //   title: 'Deploying on AWS',
+    //   collapsable: false,
+    //   children: [
+    //     // '/guide/DZDaws-deployment',
+    //     '/guide/DZDaws-introduction',
+    //     '/guide/DZDaws-step-1',// environment
+    //     '/guide/DZDaws-step-2',// database
+    //     '/guide/DZDaws-step-3',// docker image
+    //     '/guide/DZDaws-step-4',// master node
+    //     // '/guide/DZDaws-step-5',
+    //   ]
+    // },
     {
-      title: 'Deploying on AWS',
+      title: 'Transaction Updates',
       collapsable: false,
       children: [
-        // '/guide/DZDaws-deployment',
-        '/guide/DZDaws-introduction',
-        '/guide/DZDaws-step-1',// environment
-        '/guide/DZDaws-step-2',// database
-        '/guide/DZDaws-step-3',// docker image
-        '/guide/DZDaws-step-4',// master node
-        // '/guide/DZDaws-step-5',
+        '/guide/DZDpolling',
+        '/guide/DZDwebhooks',
+        '/guide/DZDprogress-reports',
+      ]
+    },
+    {
+      title: 'Miscellaneous',
+      collapsable: false,
+      children: [
+        '/guide/DZDsleeping',
+        '/guide/DZDreply-converters',
+        '/guide/DZDthrottling',
+        '/guide/DZDerror-messages',
+        '/guide/DZDstep-definitions',
       ]
     },
     // {
@@ -108,230 +110,153 @@ const sidebar = {
     //     '/guide/component-edge-cases'
     //   ]
     // },
-    // {
-    //   title: 'Transitions & Animation',
-    //   collapsable: false,
-    //   children: [
-    //     '/guide/transitions-overview',
-    //     '/guide/transitions-enterleave',
-    //     '/guide/transitions-list',
-    //     '/guide/transitions-state'
-    //   ]
-    // },
-    // {
-    //   title: 'Reusability & Composition',
-    //   collapsable: false,
-    //   children: [
-    //     {
-    //       title: 'Composition API',
-    //       children: [
-    //         '/guide/composition-api-introduction',
-    //         '/guide/composition-api-setup',
-    //         '/guide/composition-api-lifecycle-hooks',
-    //         '/guide/composition-api-provide-inject',
-    //         '/guide/composition-api-template-refs'
-    //       ]
-    //     },
-    //     '/guide/mixins',
-    //     '/guide/custom-directive',
-    //     '/guide/teleport',
-    //     '/guide/render-function',
-    //     '/guide/plugins'
-    //   ]
-    // },
-    // {
-    //   title: 'Advanced Guides',
-    //   collapsable: false,
-    //   children: [
-    //     '/guide/web-components',
-    //     {
-    //       title: 'Reactivity',
-    //       children: [
-    //         '/guide/reactivity',
-    //         '/guide/reactivity-fundamentals',
-    //         '/guide/reactivity-computed-watchers'
-    //       ]
-    //     },
-    //     '/guide/optimizations',
-    //     '/guide/change-detection'
-    //   ]
-    // },
-    // {
-    //   title: 'Tooling',
-    //   collapsable: false,
-    //   children: [
-    //     '/guide/single-file-component',
-    //     '/guide/testing',
-    //     '/guide/typescript-support',
-    //     '/guide/mobile',
-    //     '/guide/tooling/deployment'
-    //   ]
-    // },
-    // {
-    //   title: 'Scaling Up',
-    //   collapsable: false,
-    //   children: [
-    //     '/guide/routing',
-    //     '/guide/state-management',
-    //     '/guide/ssr',
-    //     '/guide/security'
-    //   ]
-    // },
-    // {
-    //   title: 'Accessibility',
-    //   collapsable: false,
-    //   children: [
-    //     '/guide/a11y-basics',
-    //     '/guide/a11y-semantics',
-    //     '/guide/a11y-standards',
-    //     '/guide/a11y-resources'
-    //   ]
-    // }
   ],
   api: [
     '/api/DZDDATP',
-    '/api/DZDstepInstance',
-    '/api/DZDstep',
-
-    // ZZZZ Forms and Fields
-
-
-
-    // '/api/global-api',
+    // '/api/DZDDATPextras',
+    {
+      title: 'Classes',
+      collapsable: false,
+      children: [
+        '/api/DZDstepInstance',
+        '/api/DZDstep',
+      ]
+    },
+    {
+      title: 'Variables',
+      collapsable: false,
+      children: [
+        // '/api/DZDDATPextras',
+      ]
+    },
+    {
+      title: 'Other',
+      collapsable: false,
+      children: [
+        // '/guide/DZDaws-deployment',
+        '/api/DZDDATPextras',
+        // '/deployment/DZDaws-step-1',// environment
+        // '/deployment/DZDaws-step-2',// database
+        // '/deployment/DZDaws-step-3',// docker image
+        // '/deployment/DZDaws-step-4',// master node
+      ]
+    },
+  ],
+  deployment: [
+    '/deployment/DZDconfiguration',
     // {
-    //   title: 'Options',
-    //   path: '/api/options-api',
+    //   title: 'Deployment 2',
     //   collapsable: false,
     //   children: [
-    //     '/api/options-data',
-    //     '/api/options-dom',
-    //     '/api/options-lifecycle-hooks',
-    //     '/api/options-assets',
-    //     '/api/options-composition',
-    //     '/api/options-misc'
+    //     // '/guide/DZDinstallation',
+    //     // '/guide/DZDdeveloper-guide',
+    //     '/deployment/DZDconfiguration',
+    //     // '/guide/template-syntax',
+    //     // '/guide/data-methods',
+    //     // '/guide/computed',
+    //     // '/guide/class-and-style',
+    //     // '/guide/conditional',
+    //     // '/guide/list',
+    //     // '/guide/events',
+    //     // '/guide/forms',
+    //     // '/guide/component-basics'
     //   ]
     // },
-    // '/api/instance-methods',
-    // '/api/directives',
-    // '/api/special-attributes',
-    // '/api/built-in-components.md',
-    // {
-    //   title: 'Reactivity API',
-    //   path: '/api/reactivity-api',
-    //   collapsable: false,
-    //   children: [
-    //     '/api/basic-reactivity',
-    //     '/api/refs-api',
-    //     '/api/computed-watch-api',
-    //     '/api/effect-scope',
-    //   ]
-    // },
-    // '/api/composition-api',
-    // {
-    //   title: 'Single File Components',
-    //   collapsable: false,
-    //   children: [
-    //     {
-    //       title: 'Spec',
-    //       path: '/api/sfc-spec'
-    //     },
-    //     {
-    //       title: 'Tooling',
-    //       path: '/api/sfc-tooling'
-    //     },
-    //     {
-    //       title: '<script setup>',
-    //       path: '/api/sfc-script-setup'
-    //     },
-    //     {
-    //       title: '<style> Features',
-    //       path: '/api/sfc-style'
-    //     }
-    //   ]
-    // }
-  ],
-  examples: [
     {
-      title: 'Examples',
+      title: 'Deploying on AWS',
       collapsable: false,
       children: [
-        '/examples/markdown',
-        '/examples/commits',
-        '/examples/grid-component',
-        '/examples/tree-view',
-        '/examples/svg',
-        '/examples/modal',
-        '/examples/elastic-header',
-        '/examples/select2',
-        '/examples/todomvc'
+        // '/guide/DZDaws-deployment',
+        '/deployment/DZDaws-introduction',
+        '/deployment/DZDaws-step-1',// environment
+        '/deployment/DZDaws-step-2',// database
+        '/deployment/DZDaws-step-3',// docker image
+        '/deployment/DZDaws-step-4',// master node
       ]
-    }
+    },
   ],
-  migration: [
-    '/guide/migration/introduction',
-    '/guide/migration/migration-build',
-    {
-      title: 'Details',
-      collapsable: false,
-      children: [
-        '/guide/migration/array-refs',
-        '/guide/migration/async-components',
-        '/guide/migration/attribute-coercion',
-        '/guide/migration/attrs-includes-class-style',
-        '/guide/migration/children',
-        '/guide/migration/custom-directives',
-        '/guide/migration/custom-elements-interop',
-        '/guide/migration/data-option',
-        '/guide/migration/emits-option',
-        '/guide/migration/events-api',
-        '/guide/migration/filters',
-        '/guide/migration/fragments',
-        '/guide/migration/functional-components',
-        '/guide/migration/global-api',
-        '/guide/migration/global-api-treeshaking',
-        '/guide/migration/inline-template-attribute',
-        '/guide/migration/key-attribute',
-        '/guide/migration/keycode-modifiers',
-        '/guide/migration/listeners-removed',
-        '/guide/migration/mount-changes',
-        '/guide/migration/props-data',
-        '/guide/migration/props-default-this',
-        '/guide/migration/render-function-api',
-        '/guide/migration/slots-unification',
-        '/guide/migration/suspense',
-        '/guide/migration/transition',
-        '/guide/migration/transition-as-root',
-        '/guide/migration/transition-group',
-        '/guide/migration/v-on-native-modifier-removed',
-        '/guide/migration/v-model',
-        '/guide/migration/v-if-v-for',
-        '/guide/migration/v-bind',
-        '/guide/migration/vnode-lifecycle-events',
-        '/guide/migration/watch'
-      ]
-    }
-  ],
-  ssr: [
-    ['/guide/ssr/introduction', 'Introduction'],
-    '/guide/ssr/getting-started',
-    '/guide/ssr/universal',
-    '/guide/ssr/structure',
-    '/guide/ssr/build-config',
-    '/guide/ssr/server',
-    '/guide/ssr/routing',
-    '/guide/ssr/hydration'
-  ],
-  contributing: [
-    {
-      title: 'Contribute to the Docs',
-      collapsable: false,
-      children: [
-        '/guide/contributing/writing-guide',
-        '/guide/contributing/doc-style-guide',
-        '/guide/contributing/translations'
-      ]
-    }
-  ]
+  // examples: [
+  //   {
+  //     title: 'Examples',
+  //     collapsable: false,
+  //     children: [
+  //       '/examples/markdown',
+  //       '/examples/commits',
+  //       '/examples/grid-component',
+  //       '/examples/tree-view',
+  //       '/examples/svg',
+  //       '/examples/modal',
+  //       '/examples/elastic-header',
+  //       '/examples/select2',
+  //       '/examples/todomvc'
+  //     ]
+  //   }
+  // ],
+  // migration: [
+  //   '/guide/migration/introduction',
+  //   '/guide/migration/migration-build',
+  //   {
+  //     title: 'Details',
+  //     collapsable: false,
+  //     children: [
+  //       '/guide/migration/array-refs',
+  //       '/guide/migration/async-components',
+  //       '/guide/migration/attribute-coercion',
+  //       '/guide/migration/attrs-includes-class-style',
+  //       '/guide/migration/children',
+  //       '/guide/migration/custom-directives',
+  //       '/guide/migration/custom-elements-interop',
+  //       '/guide/migration/data-option',
+  //       '/guide/migration/emits-option',
+  //       '/guide/migration/events-api',
+  //       '/guide/migration/filters',
+  //       '/guide/migration/fragments',
+  //       '/guide/migration/functional-components',
+  //       '/guide/migration/global-api',
+  //       '/guide/migration/global-api-treeshaking',
+  //       '/guide/migration/inline-template-attribute',
+  //       '/guide/migration/key-attribute',
+  //       '/guide/migration/keycode-modifiers',
+  //       '/guide/migration/listeners-removed',
+  //       '/guide/migration/mount-changes',
+  //       '/guide/migration/props-data',
+  //       '/guide/migration/props-default-this',
+  //       '/guide/migration/render-function-api',
+  //       '/guide/migration/slots-unification',
+  //       '/guide/migration/suspense',
+  //       '/guide/migration/transition',
+  //       '/guide/migration/transition-as-root',
+  //       '/guide/migration/transition-group',
+  //       '/guide/migration/v-on-native-modifier-removed',
+  //       '/guide/migration/v-model',
+  //       '/guide/migration/v-if-v-for',
+  //       '/guide/migration/v-bind',
+  //       '/guide/migration/vnode-lifecycle-events',
+  //       '/guide/migration/watch'
+  //     ]
+  //   }
+  // ],
+  // ssr: [
+  //   ['/guide/ssr/introduction', 'Introduction'],
+  //   '/guide/ssr/getting-started',
+  //   '/guide/ssr/universal',
+  //   '/guide/ssr/structure',
+  //   '/guide/ssr/build-config',
+  //   '/guide/ssr/server',
+  //   '/guide/ssr/routing',
+  //   '/guide/ssr/hydration'
+  // ],
+  // contributing: [
+  //   {
+  //     title: 'Contribute to the Docs',
+  //     collapsable: false,
+  //     children: [
+  //       '/guide/contributing/writing-guide',
+  //       '/guide/contributing/doc-style-guide',
+  //       '/guide/contributing/translations'
+  //     ]
+  //   }
+  // ]
 }
 
 module.exports = {
@@ -410,148 +335,18 @@ module.exports = {
         //     text: 'Guide',
             link: '/guide/DZDintroduction'
           // },
-          // {
-          //   text: 'Style Guide',
-          //   link: '/style-guide/'
-          // },
-          // {
-          //   text: 'Cookbook',
-          //   link: '/cookbook/'
-          // },
-          // {
-          //   text: 'Examples',
-          //   link: '/examples/markdown'
-          // },
-          // {
-          //   text: 'Contribute',
-          //   link: '/guide/contributing/writing-guide'
-          // },
-          // {
-          //   text: 'Migration from Vue 2',
-          //   link: '/guide/migration/introduction'
-          // }
         // ]
       },
       {
         text: 'API Reference',
-        link: '/api/'
+        link: '/api/DZDDATP.html'
       },
-      // {
-      //   text: 'Ecosystem',
-      //   items: [
-      //     {
-      //       text: 'Community',
-      //       ariaLabel: 'Community Menu',
-      //       items: [
-      //         {
-      //           text: 'Team',
-      //           link: '/community/team/'
-      //         },
-      //         {
-      //           text: 'Partners',
-      //           link: '/community/partners'
-      //         },
-      //         {
-      //           text: 'Join',
-      //           link: '/community/join/'
-      //         },
-      //         {
-      //           text: 'Themes',
-      //           link: '/community/themes/'
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       text: 'Official Projects',
-      //       items: [
-      //         {
-      //           text: 'Vue Router',
-      //           link: 'https://next.router.vuejs.org/'
-      //         },
-      //         {
-      //           text: 'Vuex',
-      //           link: 'https://next.vuex.vuejs.org/'
-      //         },
-      //         {
-      //           text: 'Vue CLI',
-      //           link: 'https://cli.vuejs.org/'
-      //         },
-      //         {
-      //           text: 'Vue Test Utils',
-      //           link: 'https://next.vue-test-utils.vuejs.org/guide/'
-      //         },
-      //         {
-      //           text: 'Devtools',
-      //           link: 'https://devtools.vuejs.org'
-      //         },
-      //         {
-      //           text: 'Weekly news',
-      //           link: 'https://news.vuejs.org/'
-      //         },
-      //         {
-      //           text: 'Blog',
-      //           link: 'https://blog.vuejs.org/'
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
-      // {
-      //   text: 'Support Vue',
-      //   link: '/support-vuejs/',
-      //   items: [
-      //     {
-      //       text: 'One-time Donations',
-      //       link: '/support-vuejs/#one-time-donations'
-      //     },
-      //     {
-      //       text: 'Recurring Pledges',
-      //       link: '/support-vuejs/#recurring-pledges'
-      //     },
-      //     {
-      //       text: 'T-Shirt Shop',
-      //       link: 'https://vue.threadless.com/'
-      //     }
-      //   ]
-      // },
-      // {
-      //   text: 'Translations',
-      //   link: '#',
-      //   items: [
-      //     // Translation maintainers: Please include the link below to the English documentation
-      //     // {
-      //     //   text: 'English',
-      //     //   link: 'https://v3.vuejs.org/',
-      //     //   isTranslation: true
-      //     // },
-      //     {
-      //       text: '中文',
-      //       link: 'https://v3.cn.vuejs.org/',
-      //       isTranslation: true
-      //     },
-      //     {
-      //       text: '한국어',
-      //       link: 'https://v3.ko.vuejs.org/',
-      //       isTranslation: true
-      //     },
-      //     {
-      //       text: '日本語',
-      //       link: 'https://v3.ja.vuejs.org/',
-      //       isTranslation: true
-      //     },
-      //     {
-      //       text: 'Русский',
-      //       link: 'https://v3.ru.vuejs.org/ru/',
-      //       isTranslation: true
-      //     },
-      //     {
-      //       text: 'More Translations',
-      //       link: '/guide/contributing/translations#community-translations'
-      //     }
-      //   ]
-      // }
+      {
+        text: 'Deployment',
+        link: '/deployment/DZDconfiguration'
+      },
     ],
-    repo: 'vuejs/docs',
+    // repo: 'vuejs/docs',
     editLinks: true,
     editLinkText: 'Edit this on GitHub!',
     lastUpdated: 'Last updated',
@@ -566,6 +361,7 @@ module.exports = {
       '/community/': sidebar.guide,
       '/cookbook/': sidebar.cookbook,
       '/api/': sidebar.api,
+      '/deployment/': sidebar.deployment,
       '/examples/': sidebar.examples
     },
     smoothScroll: false,

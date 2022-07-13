@@ -1,4 +1,4 @@
-# Step
+# class Step
 
 As you customize your DATP application, you implement new steps by
 defining a class that overrides the `Step` object.
