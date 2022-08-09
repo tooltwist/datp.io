@@ -34,9 +34,12 @@ use the same definition.
     "statePersistanceInterval": 15,
     "logDestination": "db",
     "deltaDestination": "db",
+    "keepAliveTimeout": 65000,
+    "headersTimeout": 66000
   },
   "db": {
     "host": "localhost",
+    "writeHost": "localhost",
     "port": 3306,
     "user": "root",
     "password": "",
@@ -60,7 +63,7 @@ use the same definition.
 Name of the current executable.
 
 ## datp.description
-
+A string to describe this node group.
 
 ## datp.protocol
 (default https)
@@ -152,9 +155,31 @@ case of a database failure.
 The `none` option is useful during performance testing, to determine
 which part of system load is caused by saving transaction deltas.
 
+## datp.maxWebhookAttempts
+(default=5)  
+This value specifies how many times DATP will attempt to call the webhook for a transaction before giving up.
+
+## datp.keepAliveTimeout
+(default=65000)  
+This value is used to configure Node to not shut down socket of the API endpoint within the specified number of milliseconds.
+We've added this to provide a workaround for a bug that causes Express, Restify and some other frameworks to
+occassionally return 502 errors under load, when behind an AWS load balancer.
+
+For more details and a full description of the problem, see [Dealing with Intermittent 502's between an AWS ALB and Express Web Server
+](https://adamcrowder.net/posts/node-express-api-and-aws-alb-502).
+
+To prevent these errors make sure `keepAliveTimeout` is greater than the AWS timeout for the ALB (Application Load Balancer).
+
+## datp.headersTimeout
+(default=66000)  
+This is related to `keepAliveTimeout` above. To prevent the reported 502 errors, this value must be longer than `keepAliveTimeout`, which
+must be longer than the timeout of your AWS ALB.
 
 ## db.host
-Domain name for DATP's database.
+Domain name for reading from the DATP database.
+
+## db.writeHost
+The endpoint for writing to the DATP database.
 
 ## db.port
 (default=3306)
@@ -172,6 +197,15 @@ Database password.
 
 The name of the database used by this DATP node group.
 
+## db.connectionLimit
+(default=10)
+
+This is the maximum number of connections in each connnection pool for the DATP database. Note that
+there are two connection pools - one for reading and one for writing - so DATP will ultimately use double this
+number of connections.
+
+When specifying this value consider the number of nodes you will have running, across all node groups, and ensure you
+do not exceed the maximum number of connections allowed by the database.
 
 ## redis.host
 (default=localhost)

@@ -7,12 +7,12 @@ the ***"Don't call us, we'll call you..."*** of API design. Rather than the clie
 nagging the server, the client patiently waits for the DATP-based application to call them and
 tell them that the transaction is complete.
 
-The instruction to reply via a webhook is contained when the transaction is created:
+The instruction to reply via a webhook is specified as the transaction is created:
 
 ```json
 {
     "metadata": {
-        "reply": "https://...........",
+        "webhook": "https://...........",
         "progressReports": true
     },
     "data": {

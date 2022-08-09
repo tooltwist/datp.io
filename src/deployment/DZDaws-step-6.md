@@ -1,4 +1,4 @@
-# Step 5 - Availability Monitor
+# Step 6 - Slave nodes
 
 
 ### Prerequisites

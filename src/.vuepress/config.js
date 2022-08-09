@@ -93,6 +93,7 @@ const sidebar = {
         '/guide/DZDthrottling',
         '/guide/DZDerror-messages',
         '/guide/DZDstep-definitions',
+        '/guide/DZDresponse-classification',
       ]
     },
     // {
@@ -172,6 +173,8 @@ const sidebar = {
         '/deployment/DZDaws-step-2',// database
         '/deployment/DZDaws-step-3',// docker image
         '/deployment/DZDaws-step-4',// master node
+        '/deployment/DZDaws-step-5',// admin node
+        '/deployment/DZDaws-step-6',// slave node
       ]
     },
   ],
