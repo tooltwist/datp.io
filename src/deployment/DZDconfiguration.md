@@ -20,7 +20,6 @@ use the same definition.
 ```json
 {
   "datp": {
-    "name": "master",
     "description": "Master DATP node",
     "protocol": "http",
     "host": "localhost",
@@ -32,10 +31,14 @@ use the same definition.
       "privateKey": "-----BEGIN PRIVATE KEY-----\n....\n-----END PRIVATE KEY-----\n"
     },
     "statePersistanceInterval": 15,
-    "logDestination": "db",
-    "deltaDestination": "db",
+    "logDestination": "datadog",
+    "deltaDestination": "none",
     "keepAliveTimeout": 65000,
     "headersTimeout": 66000
+  },
+  "datadog": {
+    "apikey": ".....",
+    "appkey": "....."
   },
   "db": {
     "host": "localhost",
@@ -59,26 +62,29 @@ use the same definition.
 }
 ```
 
-## datp.name
-Name of the current executable.
+## datp.deltaDestination
+`db` | `dynamodb` | `none`
+
+This defines where DATP will write it's transaction journal entries ("deltas").
+
+In most applications this can be set to `none` to reduce processing overhead. It is only
+required where micro-level tracking of the transaction state is required. For example,
+you might turn it on for just the node where a specific type of transaction is processed.
+
+During development it can be beneficial to write deltas to the database using the `db` option,
+where they can easily be viewed or cleared out using PhpMyadin.
+
+`DynamoDB` is a fast alternative to the database for production
+environments, and provides fallback transaction state information in
+case of a database failure.
+
+Also, the `none` option is useful during performance testing, to determine
+which part of system load is caused by saving transaction deltas.
+
 
 ## datp.description
 A string to describe this node group.
 
-## datp.protocol
-(default https)
-
-The protocol MONDAT should use to access DATP endpoints.
-
-## datp.host
-e.g. localhost
-
-The domain name MONDAT should use to access DATP endpoints.
-
-## datp.port
-e.g. 4000
-
-The HTTP port that MONDAT should use to access DATP endpoints.
 
 <!--
 #### midiSupported
@@ -88,44 +94,30 @@ midi controller to control loads applied while running load testing.
 This requires that the 
 -->
 
-## datp.nodeGroup
-String (default="master")
-
-When you divide your application into multiple types of DATP node, this value is used to group instances of each node type.
-
-```json
-"datp": {
-  "nodeGroup": "master"
-}
-```
+## datp.development
+ZZZZZ
 
 
-## datp.webhook-credentials
+## datp.headersTimeout
+(default=66000)  
+This is related to `keepAliveTimeout`. To prevent the reported 502 errors, this value must be longer than `keepAliveTimeout`, which
+must be longer than the timeout of your AWS ALB.
 
-When DATP calls a client's webhook to notify the status of a transaction, the result is signed with a digital signature. This section of the config file defines the credentials to sign and check
-those signatures.
+## datp.host
+e.g. localhost
 
-See [./DZDwebhook-background.html]! for details.
-See the [Web Hooks](./DZDwebhook-background.html#web-hooks) section for details.
+The domain name MONDAT should use to access DATP endpoints.
 
-```json
-  "datp": {
-    "webhook-credentials": {
-      "publicKey": "-----BEGIN PUBLIC KEY-----\n....\n-----END PUBLIC KEY-----\n",
-      "privateKey": "-----BEGIN PRIVATE KEY-----\n....\n-----END PRIVATE KEY-----\n"
-    },
-    ...
-  }
-  ```
+## datp.keepAliveTimeout
+(default=65000)  
+This value is used to configure Node to not shut down socket of the API endpoint within the specified number of milliseconds.
+We've added this to provide a workaround for a bug that causes Express, Restify and some other frameworks to
+occassionally return 502 errors under load, when behind an AWS load balancer.
 
-## datp.statePersistanceInterval
-(default=15 seconds)  
+For more details and a full description of the problem, see [Dealing with Intermittent 502's between an AWS ALB and Express Web Server
+](https://adamcrowder.net/posts/node-express-api-and-aws-alb-502).
 
-DATP normally stores transaction _state_ in REDIS, but if it is not accessed for a long time it is assumed the transaction has been put to sleep for an extended
-period, and the state will be persisted to long term storage.
-
-The `statePersistanceInterval` is the minimum number of seconds until
-DATP schedules the state to be moved to this long term storage.
+To prevent these errors make sure `keepAliveTimeout` is greater than the AWS timeout for the ALB (Application Load Balancer).
 
 ## datp.logDestination
 `db` | `datadog` | `none`
@@ -140,40 +132,82 @@ environments.
 The `none` option is useful during performance testing, to determine
 which part of system load is caused by the logging.
 
-
-## datp.deltaDestination
-`db` | `dynamodb` | `none`
-
-This defines where DATP will write it's transaction journal entries ("deltas").
-
-During development it's easiest to write deltas to the database using the `db` option, where they can easily be viewed or cleared out using PhpMyadin.
-
-`DynamoDB` is a fast alternative to the database for production
-environments, and provides fallback transaction state information in
-case of a database failure.
-
-The `none` option is useful during performance testing, to determine
-which part of system load is caused by saving transaction deltas.
+## datp.logHealthcheck
+`true`|`false`  
+When true, each call to the healthcheck URL will be logged to the console.
+This is useful to isolate errors when debugging errors with a load balancer or AWS target group.
 
 ## datp.maxWebhookAttempts
 (default=5)  
 This value specifies how many times DATP will attempt to call the webhook for a transaction before giving up.
 
-## datp.keepAliveTimeout
-(default=65000)  
-This value is used to configure Node to not shut down socket of the API endpoint within the specified number of milliseconds.
-We've added this to provide a workaround for a bug that causes Express, Restify and some other frameworks to
-occassionally return 502 errors under load, when behind an AWS load balancer.
+## datp.name
+(deprecated)  
+Name of the current node.
 
-For more details and a full description of the problem, see [Dealing with Intermittent 502's between an AWS ALB and Express Web Server
-](https://adamcrowder.net/posts/node-express-api-and-aws-alb-502).
+## datp.nodeGroup
+String (default="master")
 
-To prevent these errors make sure `keepAliveTimeout` is greater than the AWS timeout for the ALB (Application Load Balancer).
+When you divide your application into multiple types of DATP node, this value is used to group instances of each node type.
 
-## datp.headersTimeout
-(default=66000)  
-This is related to `keepAliveTimeout` above. To prevent the reported 502 errors, this value must be longer than `keepAliveTimeout`, which
-must be longer than the timeout of your AWS ALB.
+```json
+"datp": {
+  "nodeGroup": "master"
+}
+```
+
+
+## datp.port
+e.g. 4000
+
+The HTTP port that MONDAT should use to access DATP endpoints.
+
+## datp.protocol
+(default https)
+The protocol MONDAT should use to access DATP endpoints.
+
+## datp.serveMondat
+(default=false)  
+If true the API server will also act as the website hosting MONDAT.
+This requires that the MONDAT server be generated into the `dist` directory.
+
+## datp.serveMondatApi
+(default=false)  
+When true, the server will enable the API endpoints used by MONDAT. Note that this is
+different to `datp.serveMondat`, which causes the server to serve up the MONDAT clint/website.
+
+## datp.statePersistanceInterval
+(default=15 seconds)  
+
+DATP normally stores transaction _state_ in REDIS, but if it is not accessed for a long time it is assumed the transaction has been put to sleep for an extended
+period, and the state will be persisted to long term storage.
+
+The `statePersistanceInterval` is the minimum number of seconds until
+DATP schedules the state to be moved to this long term storage.
+
+## datp.webhook-credentials
+When DATP calls a client's webhook to notify the status of a transaction, the result is signed with a digital signature. This section of the config file defines the credentials to sign and check
+those signatures.
+
+See [./DZDwebhook-background.html]! for details.
+See the [Web Hooks](./DZDwebhook-background.html#web-hooks) section for details.
+
+```json
+  "datp": {
+    "webhook-credentials": {
+      "publicKey": "-----BEGIN PUBLIC KEY-----\n....\n-----END PUBLIC KEY-----\n",
+      "privateKey": "-----BEGIN PRIVATE KEY-----\n....\n-----END PRIVATE KEY-----\n"
+    },
+    ...
+  }
+```
+
+## datadog.apikey
+The APIKey provided by Datadog. Only required if you are logging to Datadog.
+
+## datadog.appkey
+The Application Key provided by Datadog. Only required if you are logging to Datadog.
+
 
 ## db.host
 Domain name for reading from the DATP database.

@@ -30,7 +30,7 @@ API definition.
 ## The client-side handler
 To receive events from your application, your client must set up a publicly accessible HTTPS endpoint that meets the following criteria:
 
-- Has a valid domain name (IP addresses are disallowed, except during devlopement).
+- Has a valid domain name (IP addresses are disallowed, except during development).
 - Listens to HTTPS requests on port 443.
 - Has a valid HTTPS certificate signed by a trusted Certificate Authority - CA (self-signed or expired certificates are not accepted).
 - Does not include any query arguments in the URL.

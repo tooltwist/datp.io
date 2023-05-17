@@ -143,7 +143,60 @@ const sidebar = {
       ]
     },
   ],
-  deployment: [
+  tutorial: [
+    '/tutorial/introduction',
+    {
+      title: 'Preliminary',
+      collapsable: true,
+      children: [
+        '/tutorial/1.1-prerequisites',
+        '/tutorial/1.2-devcontainer',
+        '/tutorial/1.3-restify',
+        '/tutorial/1.4-why',
+      ]
+    },
+    {
+      title: 'Development',
+      collapsable: true,
+      children: [
+        '/tutorial/2.1-datp',
+        '/tutorial/2.2-mondat',
+        '/tutorial/2.3-first-pipeline',
+        '/tutorial/2.4-authentication',
+        '/tutorial/2.5-first-step',
+        '/tutorial/2.6-transaction-routes',
+        '/tutorial/2.7-sleeping',
+        '/tutorial/2.8-polling',
+        '/tutorial/2.9-external-ids',
+        '/tutorial/2.10-application-client',
+        '/tutorial/2.11-browser-client',
+        '/tutorial/2.12-webhooks',
+        '/tutorial/2.13-switches',
+      ]
+    },
+    {
+      title: 'Performance Testing',
+      collapsable: true,
+      children: [
+        '/tutorial/3.1-load-testing',
+        '/tutorial/3.2-barrage-testing',
+      ]
+    },
+    {
+      title: 'Advanced Topics',
+      collapsable: true,
+      children: [
+        // '/guide/DZDaws-deployment',
+        '/tutorial/4.1-architecture',
+        '/tutorial/4.2-nodeGroups',
+        '/tutorial/4.3-running-native',
+        '/tutorial/4.4-building-in-docker',
+        '/tutorial/4.5-error-messages',
+        '/tutorial/4.6-replyConverter',
+        '/tutorial/4.7-formsAndFields',
+      ]
+    },
+  ],  deployment: [
     '/deployment/DZDconfiguration',
     // {
     //   title: 'Deployment 2',
@@ -345,6 +398,10 @@ module.exports = {
         link: '/api/DZDDATP.html'
       },
       {
+        text: 'Tutorial',
+        link: '/tutorial/introduction.html'
+      },
+      {
         text: 'Deployment',
         link: '/deployment/DZDconfiguration'
       },
@@ -357,15 +414,16 @@ module.exports = {
     sidebarDepth: 2,
     sidebar: {
       collapsable: false,
-      '/guide/migration/': sidebar.migration,
-      '/guide/contributing/': sidebar.contributing,
-      '/guide/ssr/': sidebar.ssr,
+      // '/guide/migration/': sidebar.migration,
+      // '/guide/contributing/': sidebar.contributing,
+      // '/guide/ssr/': sidebar.ssr,
       '/guide/': sidebar.guide,
-      '/community/': sidebar.guide,
-      '/cookbook/': sidebar.cookbook,
+      // '/community/': sidebar.guide,
+      // '/cookbook/': sidebar.cookbook,
       '/api/': sidebar.api,
+      '/tutorial/': sidebar.tutorial,
       '/deployment/': sidebar.deployment,
-      '/examples/': sidebar.examples
+      // '/examples/': sidebar.examples
     },
     smoothScroll: false,
     algolia: {
